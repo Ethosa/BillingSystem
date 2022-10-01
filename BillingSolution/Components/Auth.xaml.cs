@@ -12,8 +12,9 @@ namespace BillingSolution
     public partial class MainWindow : Window
     {
         internal EthosaBillingTestEntities db = new EthosaBillingTestEntities();
+        internal User user = null;
         private static Random random = new Random();
-        private string c = "";
+        private string secureCode = "";
 
         public MainWindow()
         {
@@ -30,36 +31,72 @@ namespace BillingSolution
         {
             if (code_text.Visibility == Visibility.Collapsed)
             {
+                // Check phone number and password
+                user = db.User.FirstOrDefault(
+                    p => p.Phone == phone.Text && p.Passoword == password.Password
+                );
+
+                if (user == null)
+                {
+                    ShowError("Неправильный телефон или пароль");
+                    return;
+                }
+
                 // Send code
                 code_text.Visibility = Visibility.Visible;
+                code_reload.Visibility = Visibility.Visible;
                 code.Visibility = Visibility.Visible;
                 auth.Content = "Вход";
-                c = new string(
-                    Enumerable.Repeat("1234567890", 6)
-                    .Select(s => s[random.Next(s.Length)]).ToArray()
-                );
-                MessageBox.Show(c, "Код", MessageBoxButton.OK, MessageBoxImage.Information);
+                GenerateNewCode();
             } else
             {
-                if (code.Text != c)
+                if (code.Text != secureCode)
                 {
                     ShowError("Неправильный код");
                     return;
                 }
-                // Check phone number and password
-                User user = db.User.FirstOrDefault(
-                    p => p.Phone == phone.Text && p.Passoword == password.Password
-                );
-                if (user != null)
-                    Auth();
-                else
-                    ShowError("Неправильный телефон или пароль");
+                Auth();
             }
         }
+        /// <summary>
+        /// Handle text input and allow only digits.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnCodePreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !char.IsDigit(e.Text, 0);
+        }
 
+        /// <summary>
+        /// Handle code reload click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnCodeReloadClick(object sender, MouseButtonEventArgs e)
+        {
+            GenerateNewCode();
+        }
+
+        /// <summary>
+        /// Вход в аккаунт
+        /// </summary>
         private void Auth()
         {
+            var role = db.Role.Find(user.Role);
+            MessageBox.Show(role.Title, "Role", MessageBoxButton.OK, MessageBoxImage.None);
+        }
 
+        /// <summary>
+        /// Regenerates new code
+        /// </summary>
+        private void GenerateNewCode()
+        {
+            secureCode = new string(
+                Enumerable.Repeat("1234567890", 6)
+                .Select(s => s[random.Next(s.Length)]).ToArray()
+            );
+            MessageBox.Show(secureCode, "Код", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         /// <summary>
@@ -76,14 +113,5 @@ namespace BillingSolution
             );
         }
 
-        /// <summary>
-        /// Handle text input and allow only digits.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnCodePreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !char.IsDigit(e.Text, 0);
-        }
     }
 }

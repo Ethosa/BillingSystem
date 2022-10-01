@@ -7,14 +7,15 @@
         mc:Ignorable="d"
         Title="Auth" Height="256" Width="312">
     <Grid>
-        <Label Content="Вход" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="136,46,132,0"/>
+        <Label Content="Вход" HorizontalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="102,46,94,0" Width="108"/>
         <TextBox x:Name="phone" HorizontalAlignment="Left" Height="22" Margin="102,76,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="108"/>
         <Label Content="Номер телфона" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="16,76,0,0" VerticalAlignment="Top" Height="22" FontSize="10"/>
         <PasswordBox x:Name="password" HorizontalAlignment="Left" Height="22" Margin="102,104,0,0" VerticalAlignment="Top" Width="108"/>
         <Label Content="Пароль" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="52,104,0,0" VerticalAlignment="Top" Height="22" FontSize="10" Width="46"/>
         <Button x:Name="auth" Content="Отправить код" HorizontalAlignment="Left" Margin="109,162,0,0" VerticalAlignment="Top" Width="92" Background="#FFDDDDDD" BorderBrush="{x:Null}" Click="OnAuthClick"/>
-        <TextBox x:Name="code" HorizontalAlignment="Left" Height="22" Margin="102,131,0,0" VerticalAlignment="Top" Width="108" Visibility="Collapsed" PreviewTextInput="OnCodePreviewTextInput"/>
+        <TextBox x:Name="code" HorizontalAlignment="Left" Height="22" Margin="102,131,0,0" VerticalAlignment="Top" Width="108" PreviewTextInput="OnCodePreviewTextInput" Visibility="Collapsed"/>
         <Label x:Name="code_text" Content="Код" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Margin="70,131,0,0" VerticalAlignment="Top" Height="22" FontSize="10" Width="28" Visibility="Collapsed"/>
-        
+        <Image x:Name="code_reload" HorizontalAlignment="Left" Height="22" Margin="215,131,0,0" VerticalAlignment="Top" Width="23" Source="../Assets/code_reload.png" Visibility="Collapsed" MouseDown="OnCodeReloadClick"/>
+
     </Grid>
 </Window>
