@@ -163,9 +163,6 @@
     <Resource Include="Assets\Лого ТНС.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\На авторизацию_Обновление кода.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Assets\CRM.png" />
     <Resource Include="Assets\Абоненты.png" />
     <Resource Include="Assets\Активы.png" />
@@ -174,6 +171,7 @@
     <Resource Include="Assets\Управление обрудованием.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\code_reload.png" />
     <Content Include="Models\Billing.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Billing.Context.cs</LastGenOutput>
